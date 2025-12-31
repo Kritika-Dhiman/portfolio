@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
@@ -18,8 +17,8 @@ function App() {
         <Contact />
       </main>
       <footer className="section-padding border-t border-gray-800">
-        <div className="max-w-7xl mx-auto text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} Portfolio. All rights reserved.</p>
+        <div className="content-max-width text-center text-gray-500 text-sm">
+          <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
         </div>
       </footer>
     </div>
@@ -27,4 +26,5 @@ function App() {
 }
 
 export default App
+
 

@@ -2,32 +2,34 @@ import { Briefcase, Calendar } from 'lucide-react'
 
 interface ExperienceItem {
   title: string
-  company: string
+  
   period: string
   description: string[]
 }
 
 const experiences: ExperienceItem[] = [
   {
-    title: 'Senior Full Stack Developer',
-    company: 'Tech Company Inc.',
-    period: '2022 - Present',
+    title: 'LinkedIn CoachIn Program',
+    
+    period: 'Feb - 2025',
     description: [
-      'Led development of multiple web applications serving 100K+ users',
-      'Architected scalable microservices using Node.js and React',
-      'Mentored junior developers and established coding best practices',
-      'Reduced application load time by 40% through optimization',
+      'Selected among the top 80 out of 18,000+ applicants for a competitive mentorship program focused on DSA, problem-solving, and career readiness.'
     ],
   },
   {
-    title: 'Full Stack Developer',
-    company: 'Startup Solutions',
-    period: '2020 - 2022',
+    title: 'Smart Delhi Ideathon – Top 5 Finalist',
+    
+    period: 'Feb - 2025',
     description: [
-      'Built and maintained RESTful APIs handling millions of requests',
-      'Developed responsive frontend applications using React and TypeScript',
-      'Collaborated with cross-functional teams in agile environment',
-      'Implemented CI/CD pipelines reducing deployment time by 60%',
+      'Ranked in the top 0.5% of 1,000+ teams for proposing CleanWave, an AI + IoT-based drone solution for river cleanup with ML-driven pollution prediction.',
+    ],
+  },
+  {
+    title: 'NinjaSprint Ideathon by Coding Ninjas',
+    
+    period: 'April - 2024',
+    description: [
+      'Awarded Best All-Women Team for building an innovative technology solution under competitive hackathon constraints.',
     ],
   },
 ]
@@ -37,7 +39,7 @@ export default function Experience() {
     <section id="experience" className="section-padding border-t border-gray-800">
       <div className="content-max-width">
         <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-center text-gray-50">
-          Experience
+          Achievements
         </h2>
         <div className="w-16 h-0.5 bg-gray-700 mx-auto mb-16" />
 
@@ -52,7 +54,7 @@ export default function Experience() {
                   <h3 className="text-xl font-semibold text-gray-50 mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-gray-400">{item.company}</p>
+                  
                 </div>
                 <div className="flex items-center gap-2 text-gray-500 text-sm mt-2 sm:mt-0">
                   <Calendar size={16} />

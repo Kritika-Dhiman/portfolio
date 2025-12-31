@@ -1,15 +1,15 @@
 const skillCategories = [
   {
     title: 'Frontend',
-    skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
+    skills: ['React', 'HTML', 'CSS', "Figma"],
   },
   {
     title: 'Backend',
-    skills: ['Node.js', 'Express', 'Python', 'PostgreSQL', 'MongoDB'],
+    skills: ['Node.js', 'Express', 'Python', 'MongoDB', 'REST APIs'],
   },
   {
-    title: 'Tools & Infrastructure',
-    skills: ['Git', 'Docker', 'AWS', 'CI/CD', 'REST APIs'],
+    title: 'Tools & CS',
+    skills: ['Git', 'GitHub', 'DSA', 'OS', 'CN', 'DBMS', 'ML'],
   },
 ]
 
@@ -23,9 +23,8 @@ export default function About() {
         <div className="w-16 h-0.5 bg-gray-700 mx-auto mb-12" />
 
         <p className="text-lg text-gray-400 max-w-3xl mx-auto text-center mb-16 leading-relaxed">
-          I build web applications that solve real problems. My work focuses on clean
-          architecture, maintainable code, and user-centered design. I work with modern
-          technologies to deliver reliable, scalable solutions.
+        I’m a software engineering student at NSUT (ECE with AI/ML), focused on building backend-driven, real-world products. I enjoy designing clean APIs, working with scalable systems, and applying AI where it actually adds value. I’ve built full-stack applications using Node.js, Express, MongoDB, and React—ranging from a loan processing and compliance platform to a multilingual, voice-first inventory system for small businesses. I like breaking down ambiguous problems, writing maintainable code, and learning how large-scale systems are built in practice.
+        Currently, I’m looking to grow as a software engineer by working on impactful products with strong engineering culture.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

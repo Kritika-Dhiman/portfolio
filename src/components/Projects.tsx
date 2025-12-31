@@ -1,38 +1,39 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
 import { ExternalLink, Github } from 'lucide-react'
 
 interface Project {
   title: string
-  description: string
+  problem: string
+  solution: string
+  outcome: string
   technologies: string[]
   githubUrl: string
   liveUrl?: string
-  image?: string
 }
 
 const projects: Project[] = [
   {
     title: 'E-Commerce Platform',
-    description:
-      'A full-stack e-commerce solution with user authentication, payment integration, and admin dashboard. Features include product management, shopping cart, order tracking, and real-time inventory updates.',
+    problem: 'Small businesses needed an affordable, customizable online store solution.',
+    solution: 'Built a full-stack platform with product management, payment processing, and admin dashboard.',
+    outcome: 'Enabled merchants to launch stores quickly with secure transactions and inventory management.',
     technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'AWS'],
     githubUrl: 'https://github.com',
     liveUrl: 'https://example.com',
   },
   {
     title: 'Task Management App',
-    description:
-      'A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features. Built with modern UI/UX principles and optimized for performance.',
+    problem: 'Teams struggled with coordination and visibility into project progress.',
+    solution: 'Created a collaborative app with real-time updates, drag-and-drop organization, and team workspaces.',
+    outcome: 'Improved team productivity with clear task ownership and streamlined workflows.',
     technologies: ['Next.js', 'TypeScript', 'MongoDB', 'Socket.io', 'Tailwind CSS'],
     githubUrl: 'https://github.com',
     liveUrl: 'https://example.com',
   },
   {
     title: 'Analytics Dashboard',
-    description:
-      'A comprehensive analytics dashboard for visualizing business metrics and KPIs. Features interactive charts, data filtering, export capabilities, and responsive design for all devices.',
+    problem: 'Business metrics were scattered across multiple tools, making analysis time-consuming.',
+    solution: 'Developed a unified dashboard with interactive visualizations, filtering, and export capabilities.',
+    outcome: 'Reduced reporting time and enabled faster, data-driven decision making.',
     technologies: ['React', 'D3.js', 'Python', 'FastAPI', 'Docker'],
     githubUrl: 'https://github.com',
     liveUrl: 'https://example.com',
@@ -40,82 +41,79 @@ const projects: Project[] = [
 ]
 
 export default function Projects() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
   return (
-    <section id="projects" className="section-padding">
-      <div className="max-w-7xl mx-auto" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-center">
-            Featured Projects
-          </h2>
-          <div className="w-24 h-1 bg-primary-500 mx-auto mb-16" />
-        </motion.div>
+    <section id="projects" className="section-padding border-t border-gray-800">
+      <div className="content-max-width">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-center text-gray-50">
+          Projects
+        </h2>
+        <div className="w-16 h-0.5 bg-gray-700 mx-auto mb-16" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {projects.map((project) => (
+            <div
               key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-              className="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-800 hover:border-primary-600 transition-all duration-300 group"
+              className="bg-gray-800/30 rounded-lg border border-gray-800/50 p-8 hover:border-gray-700 transition-colors"
             >
-              <div className="h-48 bg-gradient-to-br from-primary-900 to-primary-700 flex items-center justify-center">
-                <div className="text-4xl font-bold text-primary-300 opacity-50">
-                  {project.title.charAt(0)}
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-primary-400">
+              <div className="mb-6">
+                <h3 className="text-2xl font-semibold mb-4 text-gray-50">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 mb-4 text-sm leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 bg-gray-900 text-gray-400 text-xs rounded"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-4">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-400 hover:text-primary-400 transition-colors text-sm"
-                  >
-                    <Github size={18} />
-                    Code
-                  </a>
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-gray-400 hover:text-primary-400 transition-colors text-sm"
-                    >
-                      <ExternalLink size={18} />
-                      Live Demo
-                    </a>
-                  )}
+                <div className="space-y-3 text-gray-400 leading-relaxed">
+                  <p>
+                    <span className="text-gray-500 text-sm font-medium">Problem: </span>
+                    {project.problem}
+                  </p>
+                  <p>
+                    <span className="text-gray-500 text-sm font-medium">Solution: </span>
+                    {project.solution}
+                  </p>
+                  <p>
+                    <span className="text-gray-500 text-sm font-medium">Outcome: </span>
+                    {project.outcome}
+                  </p>
                 </div>
               </div>
-            </motion.div>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 bg-gray-900/50 text-gray-400 text-xs rounded border border-gray-800/50"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex gap-6 pt-4 border-t border-gray-800/50">
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors text-sm"
+                >
+                  <Github size={18} />
+                  Code
+                </a>
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors text-sm"
+                  >
+                    <ExternalLink size={18} />
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   )
 }
+
 

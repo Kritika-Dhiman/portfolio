@@ -1,28 +1,17 @@
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
-import { Mail, Linkedin, Github, Send } from 'lucide-react'
+import { useState } from 'react'
+import { Mail, Linkedin, Github, Send, CheckCircle, XCircle } from 'lucide-react'
+import emailjs from '@emailjs/browser'
+
+type FormStatus = 'idle' | 'sending' | 'success' | 'error'
 
 export default function Contact() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setFormData({ name: '', email: '', message: '' })
-      alert('Thank you for your message! I will get back to you soon.')
-    }, 1000)
-  }
+  const [status, setStatus] = useState<FormStatus>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -31,93 +20,137 @@ export default function Contact() {
       ...formData,
       [e.target.name]: e.target.value,
     })
+    // Reset status when user starts typing again
+    if (status !== 'idle' && status !== 'sending') {
+      setStatus('idle')
+      setErrorMessage('')
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('sending')
+    setErrorMessage('')
+
+    // Get environment variables
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+    // Validate environment variables
+    if (!serviceId || !templateId || !publicKey) {
+      setStatus('error')
+      setErrorMessage(
+        'Email service is not configured. Please check environment variables.'
+      )
+      return
+    }
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: import.meta.env.VITE_YOUR_EMAIL || 'your.email@example.com',
+        },
+        publicKey
+      )
+
+      setStatus('success')
+      setFormData({ name: '', email: '', message: '' })
+    } catch (error) {
+      setStatus('error')
+      setErrorMessage(
+        'Failed to send message. Please try again or contact me directly via email.'
+      )
+      console.error('EmailJS error:', error)
+    }
   }
 
   return (
-    <section id="contact" className="section-padding">
-      <div className="max-w-7xl mx-auto" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-center">
-            Get In Touch
-          </h2>
-          <div className="w-24 h-1 bg-primary-500 mx-auto mb-16" />
-        </motion.div>
+    <section id="contact" className="section-padding border-t border-gray-800">
+      <div className="content-max-width">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-center text-gray-50">
+          Contact
+        </h2>
+        <div className="w-16 h-0.5 bg-gray-700 mx-auto mb-16" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <p className="text-lg text-gray-300 mb-8">
-              I'm always open to discussing new projects, creative ideas, or
-              opportunities to be part of your vision. Feel free to reach out!
+          <div>
+            <p className="text-lg text-gray-400 mb-10 leading-relaxed">
+              I'm available for new opportunities and interesting projects. Reach out if
+              you'd like to discuss how we can work together.
             </p>
 
-            <div className="space-y-6">
-              <motion.a
+            <div className="space-y-5">
+              <a
                 href="mailto:your.email@example.com"
-                className="flex items-center gap-4 text-gray-300 hover:text-primary-400 transition-colors group"
-                whileHover={{ x: 5 }}
+                className="flex items-center gap-4 text-gray-400 hover:text-gray-300 transition-colors group"
               >
-                <div className="p-3 bg-gray-800 rounded-lg group-hover:bg-primary-900/50 transition-colors">
-                  <Mail className="text-primary-400" size={24} />
+                <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-800/50 group-hover:border-gray-700 transition-colors">
+                  <Mail className="text-gray-500" size={20} />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-medium">your.email@example.com</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+                    Email
+                  </p>
+                  <p className="font-medium text-gray-300">
+                    your.email@example.com
+                  </p>
                 </div>
-              </motion.a>
+              </a>
 
-              <motion.a
+              <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 text-gray-300 hover:text-primary-400 transition-colors group"
-                whileHover={{ x: 5 }}
+                className="flex items-center gap-4 text-gray-400 hover:text-gray-300 transition-colors group"
               >
-                <div className="p-3 bg-gray-800 rounded-lg group-hover:bg-primary-900/50 transition-colors">
-                  <Linkedin className="text-primary-400" size={24} />
+                <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-800/50 group-hover:border-gray-700 transition-colors">
+                  <Linkedin className="text-gray-500" size={20} />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">LinkedIn</p>
-                  <p className="font-medium">linkedin.com/in/yourprofile</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+                    LinkedIn
+                  </p>
+                  <p className="font-medium text-gray-300">
+                    linkedin.com/in/yourprofile
+                  </p>
                 </div>
-              </motion.a>
+              </a>
 
-              <motion.a
+              <a
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 text-gray-300 hover:text-primary-400 transition-colors group"
-                whileHover={{ x: 5 }}
+                className="flex items-center gap-4 text-gray-400 hover:text-gray-300 transition-colors group"
               >
-                <div className="p-3 bg-gray-800 rounded-lg group-hover:bg-primary-900/50 transition-colors">
-                  <Github className="text-primary-400" size={24} />
+                <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-800/50 group-hover:border-gray-700 transition-colors">
+                  <Github className="text-gray-500" size={20} />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400">GitHub</p>
-                  <p className="font-medium">github.com/yourusername</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+                    GitHub
+                  </p>
+                  <p className="font-medium text-gray-300">
+                    github.com/yourusername
+                  </p>
                 </div>
-              </motion.a>
+              </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.form
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-400 mb-2"
+              >
                 Name
               </label>
               <input
@@ -127,13 +160,17 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
+                disabled={status === 'sending'}
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-800/50 rounded-lg text-gray-100 focus:outline-none focus:border-gray-700 focus:ring-1 focus:ring-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="Your name"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-400 mb-2"
+              >
                 Email
               </label>
               <input
@@ -143,13 +180,17 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
+                disabled={status === 'sending'}
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-800/50 rounded-lg text-gray-100 focus:outline-none focus:border-gray-700 focus:ring-1 focus:ring-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="your.email@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-400 mb-2"
+              >
                 Message
               </label>
               <textarea
@@ -158,32 +199,55 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 required
+                disabled={status === 'sending'}
                 rows={6}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all resize-none"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-800/50 rounded-lg text-gray-100 focus:outline-none focus:border-gray-700 focus:ring-1 focus:ring-gray-700 transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="Your message..."
               />
             </div>
 
-            <motion.button
+            {/* Status Messages */}
+            {status === 'success' && (
+              <div className="flex items-center gap-3 p-4 bg-gray-800/50 border border-gray-800/50 rounded-lg">
+                <CheckCircle className="text-green-500 flex-shrink-0" size={20} />
+                <p className="text-sm text-gray-300">
+                  Message sent successfully. I'll get back to you soon.
+                </p>
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="flex items-start gap-3 p-4 bg-gray-800/50 border border-red-900/50 rounded-lg">
+                <XCircle className="text-red-500 flex-shrink-0 mt-0.5" size={20} />
+                <p className="text-sm text-gray-300">
+                  {errorMessage ||
+                    'Failed to send message. Please try again or contact me directly.'}
+                </p>
+              </div>
+            )}
+
+            <button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              disabled={status === 'sending'}
+              className="w-full px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? (
-                'Sending...'
+              {status === 'sending' ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Sending...
+                </>
               ) : (
                 <>
-                  <Send size={20} />
+                  <Send size={18} />
                   Send Message
                 </>
               )}
-            </motion.button>
-          </motion.form>
+            </button>
+          </form>
         </div>
       </div>
     </section>
   )
 }
+
 

@@ -99,13 +99,13 @@ export default function Contact() {
                     Email
                   </p>
                   <p className="font-medium text-gray-300">
-                    your.email@example.com
+                  kritikadh05@gmail.com
                   </p>
                 </div>
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/kritika-dhiman-a23104290/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-gray-400 hover:text-gray-300 transition-colors group"
@@ -118,13 +118,13 @@ export default function Contact() {
                     LinkedIn
                   </p>
                   <p className="font-medium text-gray-300">
-                    linkedin.com/in/yourprofile
+                  https://www.linkedin.com/in/kritika-dhiman-a23104290/
                   </p>
                 </div>
               </a>
 
               <a
-                href="https://github.com"
+                href="https://github.com/Kritika-Dhiman"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-gray-400 hover:text-gray-300 transition-colors group"
@@ -137,7 +137,7 @@ export default function Contact() {
                     GitHub
                   </p>
                   <p className="font-medium text-gray-300">
-                    github.com/yourusername
+                  https://github.com/Kritika-Dhiman
                   </p>
                 </div>
               </a>

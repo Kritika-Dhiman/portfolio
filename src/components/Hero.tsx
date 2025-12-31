@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="content-max-width w-full">
         <div className="text-center">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 text-gray-50 tracking-tight">
-            Full Stack Developer
+            Backend Developer
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
@@ -22,7 +22,7 @@ export default function Hero() {
               Get In Touch
             </a>
             <a
-              href="/resume.pdf"
+              href="https://drive.google.com/file/d/1ndRJu1kmY42rUPRMKQIGSWwMp7xlfYof/view?usp=sharing"
               download
               className="px-8 py-3 border border-gray-700 text-gray-300 hover:border-gray-600 hover:text-gray-200 rounded-lg font-medium transition-colors"
             >
@@ -32,7 +32,7 @@ export default function Hero() {
 
           <div className="flex justify-center gap-8">
             <a
-              href="https://github.com"
+              href="https://github.com/Kritika-Dhiman"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-gray-300 transition-colors"
@@ -41,7 +41,7 @@ export default function Hero() {
               <Github size={24} />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/kritika-dhiman-a23104290/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-gray-300 transition-colors"

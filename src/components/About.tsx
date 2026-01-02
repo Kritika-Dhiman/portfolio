@@ -23,7 +23,7 @@ export default function About() {
         <div className="w-16 h-0.5 bg-gray-700 mx-auto mb-12" />
 
         <p className="text-lg text-gray-400 max-w-3xl mx-auto text-center mb-16 leading-relaxed">
-        I’m a software engineering student at NSUT (ECE with AI/ML), focused on building backend-driven, real-world products. I enjoy designing clean APIs, working with scalable systems, and applying AI where it actually adds value. I’ve built full-stack applications using Node.js, Express, MongoDB, and React—ranging from a loan processing and compliance platform to a multilingual, voice-first inventory system for small businesses. I like breaking down ambiguous problems, writing maintainable code, and learning how large-scale systems are built in practice.
+        I’m a B.Tech student at NSUT (ECE with AI/ML), focused on building backend-driven, real-world products. I enjoy designing clean APIs, working with scalable systems, and applying AI where it actually adds value. I’ve built full-stack applications using Node.js, Express, MongoDB, and React—ranging from a loan processing and compliance platform to a multilingual, voice-first inventory system for small businesses. I like breaking down ambiguous problems, writing maintainable code, and learning how large-scale systems are built in practice.
         Currently, I’m looking to grow as a software engineer by working on impactful products with strong engineering culture.
         </p>
 
